@@ -186,7 +186,7 @@
 
     <button class="button" onclick="buyUpgrade(20000, 5000000)">+20000 кликов за 5000000 кликов</button>
 
-
+    <audio id="sound" src="sound.mp3" preload="auto"> 
 
 
 </div>
@@ -370,6 +370,13 @@ function checkForImageChange() {
     }
 }
 
+function playSound() {
+    const audioElement = document.getElementById('sound');
+    if (audioElement) {
+        audioElement.play();
+    }
+}
+
 function checkForShakeEffect() {
     milestones.forEach(milestone => {
         if (balance >= milestone && lastMilestone < milestone) {
@@ -377,12 +384,11 @@ function checkForShakeEffect() {
             setTimeout(() => {
                 clickableImage.classList.remove('shake');
             }, 800);
+            playSound();  // Воспроизведение звука
             lastMilestone = milestone;
         }
     });
 }
-
-
 
 
 </script>
@@ -440,4 +446,5 @@ function checkForShakeEffect() {
 
 
 </body>
+</html> 
 </html> 
