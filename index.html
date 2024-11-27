@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles.css">
-    <title>Клики</title>
+    <title>Homyk 2</title>
     <style>
         body {
             display: flex;
@@ -106,7 +106,28 @@
     </style>
 
 
+<style>
 
+    .clickable-image {
+        border-radius: 50%;
+        transition: transform 0.9s;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent; /* Убирает синий эффект при нажатии на мобильных устройствах */
+    }
+    .shake {
+        animation: shake 0.8s;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translate(0, 0); }
+        10%, 30%, 50%, 70%, 90% { transform: translate(-10px, 0); }
+        20%, 40%, 60%, 80% { transform: translate(10px, 0); }
+    }
+</style>
+
+</style>
+
+</style>
 
 
 </style>
@@ -228,7 +249,7 @@
 		  <li><i class="fa-regular fa-star"></i></li>
 		  <li><i class="fa-regular fa-star"></i></li>
 		</ul>
-		<p>Скоро листинг,а это значит....</p>
+		<p>Скоро листинг, а это значит....</p>
 	  </div>
 	</div>
 	<div class="popular">
@@ -280,6 +301,7 @@
 
 
 
+  
 
 
 
@@ -288,64 +310,81 @@
 
 
 
-
-
+<script>
 
   
-  <script>
-    let clickCount = 0;
-    let balance = 0;
-    let clickValue = 1;
-    const clickCountElement = document.getElementById('click-count');
-    const balanceElement = document.getElementById('balance');
-    const clickableImage = document.getElementById('clickable-image');
+let clickCount = 0;
+let balance = 0;
+let clickValue = 1;
+const clickCountElement = document.getElementById('click-count');
+const balanceElement = document.getElementById('balance');
+const clickableImage = document.getElementById('clickable-image');
+let milestones = [100000, 1000000, 10000000, 100000000, 1000000000];
+let lastMilestone = 0;
 
-    clickableImage.addEventListener('click', () => {
-        clickCount += clickValue;
-        balance += clickValue;
+clickableImage.addEventListener('click', () => {
+    clickCount += clickValue;
+    balance += clickValue;
+    updateDisplay();
+    animateImage();
+    checkForImageChange();
+    checkForShakeEffect();
+});
+
+function updateDisplay() {
+    clickCountElement.textContent = clickCount;
+    balanceElement.textContent = balance;
+}
+
+function animateImage() {
+    clickableImage.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+        clickableImage.style.transform = 'scale(1)';
+    }, 400);
+}
+
+function buyUpgrade(increase, cost) {
+    if (balance >= cost) {
+        balance -= cost;
+        clickValue += increase;
         updateDisplay();
-        animateImage();
-        checkForImageChange();
+    } else {
+        alert('Недостаточно кликов для покупки!');
+    }
+}
+
+function checkForImageChange() {
+    let newSrc = '';
+    if (balance >= 1000000000) {
+        newSrc = 'https://masterpiecer-images.s3.yandex.net/8846b2f0a18b11eead094a5c4dc1d0da:upscaled';
+    } else if (balance >= 100000000) {
+        newSrc = 'https://www.sostav.ru/images/news/2024/06/20/ex6x8orh.jpg';
+    } else if (balance >= 10000000) {
+        newSrc = 'https://mlyn.by/app/uploads/2024/08/full-1.jpg';
+    } else if (balance >= 100000) {
+        newSrc = 'https://expert.ru/upload/iblock/375/01os3lfo500y8zgos809odo6qrqbtcy3.jpg';
+    }
+
+    if (newSrc && clickableImage.src !== newSrc) {
+        clickableImage.src = newSrc;
+    }
+}
+
+function checkForShakeEffect() {
+    milestones.forEach(milestone => {
+        if (balance >= milestone && lastMilestone < milestone) {
+            clickableImage.classList.add('shake');
+            setTimeout(() => {
+                clickableImage.classList.remove('shake');
+            }, 800);
+            lastMilestone = milestone;
+        }
     });
+}
 
-    function updateDisplay() {
-        clickCountElement.textContent = clickCount;
-        balanceElement.textContent = balance;
-    }
 
-    function animateImage() {
-        clickableImage.style.transform = 'scale(0.9)';
-        setTimeout(() => {
-            clickableImage.style.transform = 'scale(1)';
-        }, 400);
-    }
 
-    function buyUpgrade(increase, cost) {
-        if (balance >= cost) {
-            balance -= cost;
-            clickValue += increase;
-            updateDisplay();
-        } else {
-            alert('Недостаточно кликов для покупки!');
-        }
-    }
 
-    function checkForImageChange() {
-        let newSrc = '';
-        if (balance >= 1000000000) {
-            newSrc = 'https://masterpiecer-images.s3.yandex.net/8846b2f0a18b11eead094a5c4dc1d0da:upscaled';
-        } else if (balance >= 100000000) {
-            newSrc = 'https://www.sostav.ru/images/news/2024/06/20/ex6x8orh.jpg';
-        } else if (balance >= 10000000) {
-            newSrc = 'https://mlyn.by/app/uploads/2024/08/full-1.jpg';
-        } else if (balance >= 100000) {
-            newSrc = 'https://expert.ru/upload/iblock/375/01os3lfo500y8zgos809odo6qrqbtcy3.jpg';
-        }
-
-        if (newSrc && clickableImage.src !== newSrc) {
-            clickableImage.src = newSrc;
-        }
-    }
 </script>
 
   
