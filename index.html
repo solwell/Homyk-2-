@@ -112,7 +112,7 @@
         border-radius: 50%;
         transition: transform 0.9s;
         cursor: pointer;
-        -webkit-tap-highlight-color: transparent; /* Убирает синий эффект при нажатии на мобильных устройствах */
+        -webkit-tap-highlight-color: transparent; 
     }
     .shake {
         animation: shake 0.8s;
@@ -152,7 +152,6 @@
 <body>
     
 
-    <!-- Ваш основной контент здесь -->
 
     
 
@@ -187,6 +186,9 @@
     <button class="button" onclick="buyUpgrade(20000, 5000000)">+20000 кликов за 5000000 кликов</button>
 
     <audio id="sound" src="sound.mp3" preload="auto"> 
+      <audio id="click-sound" src="sound33.mp3" preload="auto"></audio>
+<audio id="upgrade-sound" src="sound44.mp3" preload="auto"></audio>
+
 
 
 </div>
@@ -310,138 +312,140 @@
 
 
 
+
 <script>
+    let clickCount = 0;
+    let balance = 0;
+    let clickValue = 1;
+    const clickCountElement = document.getElementById('click-count');
+    const balanceElement = document.getElementById('balance');
+    const clickableImage = document.getElementById('clickable-image');
+    let milestones = [100000, 1000000, 10000000, 100000000, 1000000000];
+    let lastMilestone = 0;
 
-  
-let clickCount = 0;
-let balance = 0;
-let clickValue = 1;
-const clickCountElement = document.getElementById('click-count');
-const balanceElement = document.getElementById('balance');
-const clickableImage = document.getElementById('clickable-image');
-let milestones = [100000, 1000000, 10000000, 100000000, 1000000000];
-let lastMilestone = 0;
-
-clickableImage.addEventListener('click', () => {
-    clickCount += clickValue;
-    balance += clickValue;
-    updateDisplay();
-    animateImage();
-    checkForImageChange();
-    checkForShakeEffect();
-});
-
-function updateDisplay() {
-    clickCountElement.textContent = clickCount;
-    balanceElement.textContent = balance;
-}
-
-function animateImage() {
-    clickableImage.style.transform = 'scale(0.9)';
-    setTimeout(() => {
-        clickableImage.style.transform = 'scale(1)';
-    }, 400);
-}
-
-function buyUpgrade(increase, cost) {
-    if (balance >= cost) {
-        balance -= cost;
-        clickValue += increase;
+    clickableImage.addEventListener('click', () => {
+        clickCount += clickValue;
+        balance += clickValue;
         updateDisplay();
-    } else {
-        alert('Недостаточно кликов для покупки!');
-    }
-}
-
-function checkForImageChange() {
-    let newSrc = '';
-    if (balance >= 1000000000) {
-        newSrc = 'https://masterpiecer-images.s3.yandex.net/8846b2f0a18b11eead094a5c4dc1d0da:upscaled';
-    } else if (balance >= 100000000) {
-        newSrc = 'https://www.sostav.ru/images/news/2024/06/20/ex6x8orh.jpg';
-    } else if (balance >= 10000000) {
-        newSrc = 'https://mlyn.by/app/uploads/2024/08/full-1.jpg';
-    } else if (balance >= 100000) {
-        newSrc = 'https://expert.ru/upload/iblock/375/01os3lfo500y8zgos809odo6qrqbtcy3.jpg';
-    }
-
-    if (newSrc && clickableImage.src !== newSrc) {
-        clickableImage.src = newSrc;
-    }
-}
-
-function playSound() {
-    const audioElement = document.getElementById('sound');
-    if (audioElement) {
-        audioElement.play();
-    }
-}
-
-function checkForShakeEffect() {
-    milestones.forEach(milestone => {
-        if (balance >= milestone && lastMilestone < milestone) {
-            clickableImage.classList.add('shake');
-            setTimeout(() => {
-                clickableImage.classList.remove('shake');
-            }, 800);
-            playSound();  // Воспроизведение звука
-            lastMilestone = milestone;
-        }
+        animateImage();
+        checkForImageChange();
+        checkForShakeEffect();
+        playClickSound(); // Воспроизведение звука клика
     });
-}
+
+    function updateDisplay() {
+        clickCountElement.textContent = clickCount;
+        balanceElement.textContent = balance;
+    }
+
+    function animateImage() {
+        clickableImage.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            clickableImage.style.transform = 'scale(1)';
+        }, 400);
+    }
+
+    function buyUpgrade(increase, cost) {
+        if (balance >= cost) {
+            balance -= cost;
+            clickValue += increase;
+            updateDisplay();
+            playUpgradeSound(); // Воспроизведение звука улучшения
+        } else {
+            alert('Недостаточно кликов для покупки!');
+        }
+    }
+
+    function checkForImageChange() {
+        let newSrc = '';
+        if (balance >= 1000000000) {
+            newSrc = 'https://masterpiecer-images.s3.yandex.net/8846b2f0a18b11eead094a5c4dc1d0da:upscaled';
+        } else if (balance >= 100000000) {
+            newSrc = 'https://www.sostav.ru/images/news/2024/06/20/ex6x8orh.jpg';
+        } else if (balance >= 10000000) {
+            newSrc = 'https://mlyn.by/app/uploads/2024/08/full-1.jpg';
+        } else if (balance >= 100000) {
+            newSrc = 'https://expert.ru/upload/iblock/375/01os3lfo500y8zgos809odo6qrqbtcy3.jpg';
+        }
+
+        if (newSrc && clickableImage.src !== newSrc) {
+            clickableImage.src = newSrc;
+        }
+    }
+
+    function playSound() {
+        const audioElement = document.getElementById('sound');
+        if (audioElement) {
+            audioElement.play();
+        }
+    }
+
+    function playClickSound() {
+        const clickSound = document.getElementById('click-sound');
+        if (clickSound) {
+            clickSound.play();
+        }
+    }
+
+    function playUpgradeSound() {
+        const upgradeSound = document.getElementById('upgrade-sound');
+        if (upgradeSound) {
+            upgradeSound.play();
+        }
+    }
+
+    function checkForShakeEffect() {
+        milestones.forEach(milestone => {
+            if (balance >= milestone && lastMilestone < milestone) {
+                clickableImage.classList.add('shake');
+                setTimeout(() => {
+                    clickableImage.classList.remove('shake');
+                }, 800);
+                playSound();  // Воспроизведение звука
+                lastMilestone = milestone;
+            }
+        });
+    }
+</script>
+
+<script> 
+    const cardImg = document.querySelector(".card img"),
+          menuBtn = document.querySelector(".menu-btn"),
+          popular = document.querySelector(".popular"),
+          more = document.querySelector(".more");
+  
+    menuBtn.addEventListener("click", function () {
+        cardImg.classList.toggle("img-expand");
+        menuBtn.firstElementChild.classList.toggle("fa-times");
+        menuBtn.classList.toggle("opened");
+        more.classList.toggle("opened");
+  
+        document.querySelectorAll(".card").forEach((item) => {
+            item.classList.toggle("opened");
+        });
+        document.querySelectorAll(".popular").forEach((item) => {
+            item.classList.remove("opened");
+        });
+    });
+  
+    document.querySelectorAll(".popular").forEach((item) => {
+        item.addEventListener("click", (event) => {
+            item.classList.toggle("opened");
+        });
+    });
+</script>
 
 
 </script>
 
-  
-
-</script>
-
-
-
-  </script>
-  
-  </body>
-  </html>
-  
-
-</script>
-
-
-
-<script> const cardImg = document.querySelector(".card img"),
-	menuBtn = document.querySelector(".menu-btn"),
-	popular = document.querySelector(".popular"),
-	more = document.querySelector(".more");
-  
-  menuBtn.addEventListener("click", function () {
-	cardImg.classList.toggle("img-expand");
-	menuBtn.firstElementChild.classList.toggle("fa-times");
-	menuBtn.classList.toggle("opened");
-	more.classList.toggle("opened");
-  
-	document.querySelectorAll(".card").forEach((item) => {
-	  item.classList.toggle("opened");
-	});
-	document.querySelectorAll(".popular").forEach((item) => {
-	  item.classList.remove("opened");
-	});
-  });
-  
-  document.querySelectorAll(".popular").forEach((item) => {
-	item.addEventListener("click", (event) => {
-	  item.classList.toggle("opened");
-	});
-  });
-	</script>
 
 
 
 
 
 
-
-
+</body>
+</html> 
 
 
 
