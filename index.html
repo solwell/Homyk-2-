@@ -205,8 +205,8 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgba(0, 0, 0, 0.6); /* Увеличенная непрозрачность */
-      transition: background-color 0.3s ease; /* Плавный переход фона */
+      background-color: rgba(0, 0, 0, 0.6);
+      transition: background-color 0.3s ease;
   }
 
   .modal-content {
@@ -214,14 +214,14 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #ffffff; /* Белый фон */
+      background-color: #ffffff;
       padding: 20px;
-      border-radius: 10px; /* Закругленные углы */
+      border-radius: 10px;
       border: 2px solid #888;
       width: 90%;
       max-width: 600px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Более выраженная тень */
-      animation: fadeIn 0.5s; /* Анимация появления */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.5s;
   }
 
   @keyframes fadeIn {
@@ -234,7 +234,7 @@
       float: right;
       font-size: 28px;
       font-weight: bold;
-      transition: color 0.3s; /* Плавный переход цвета */
+      transition: color 0.3s;
   }
 
   .close-btn:hover,
@@ -245,39 +245,67 @@
   }
 
   h2 {
-      color: #333; /* Темный цвет заголовка */
-      margin-top: 10px; /* Отступ сверху */
+      color: #333; 
+      margin-top: 10px; 
   }
 
   p {
-      color: #555; /* Серый цвет текста */
-      line-height: 1.5; /* Высота строки для удобочитаемости */
+      color: #555; 
+      line-height: 1.5; 
   }
 
   ul {
-      list-style-type: disc; /* Маркеры для списка */
-      padding-left: 20px; /* Отступ слева для списка */
-      color: #444; /* Цвет текста списка */
+      list-style-type: disc; 
+      padding-left: 20px; 
+      color: #444; 
   }
 
   li {
-      margin-bottom: 10px; /* Отступ между элементами списка */
-          transition: transform .3s ease; /* Плавный переход при наведении */
+      margin-bottom: 10px; 
+          transition: transform .3s ease; 
     }
 
     li:hover {
-        transform: scale(1.05); /* Увеличение элемента списка при наведении */
-        color: #007BFF; /* Синий цвет текста при наведении */
+        transform: scale(1.05); 
+        color: #007BFF; 
     }
 
+    /* Стили для чекбокса */
     input[type="checkbox"] {
-        transform: scale(1.5); /* Увеличение размера чекбокса */
-        cursor: pointer; /* Курсор в виде указателя при наведении на чекбокс */
+        appearance: none; /* Убираем стандартный стиль */
+        width: 20px; /* Ширина чекбокса */
+        height: 20px; /* Высота чекбокса */
+        border-radius: 4px; /* Закругленные углы */
+        border: 2px solid #007BFF; /* Синий цвет рамки */
+        cursor: pointer; /* Курсор указателя */
+        outline: none; /* Убираем обводку при фокусе */
+        position: relative; /* Для позиционирования псевдоэлементов */
+        transition: background-color .3s, border-color .3s; /* Плавный переход цвета */
     }
 
-    input[type="checkbox"]:checked + label {
-        color: #28a745; /* Зеленый цвет текста при выборе чекбокса */
-        font-weight: bold; /* Жирный текст при выборе чекбокса */
+    input[type="checkbox"]:checked {
+        background-color: #007BFF; /* Синий фон при выборе */
+        border-color: #0056b3; /* Темно-синий цвет рамки при выборе */
+    }
+
+    input[type="checkbox"]:checked::after {
+        content: ''; /* Псевдоэлемент для галочки */
+        position: absolute;
+        left: 5px; /* Положение галочки */
+        top: -1px; /* Положение галочки */
+        width: 10px; /* Ширина галочки */
+        height: 10px; /* Высота галочки */
+        border-left: solid white; /* Левый край галочки */
+        border-bottom: solid white; /* Нижний край галочки */
+        transform: rotate(-45deg); /* Поворот для создания галочки */
+    }
+
+    input[type="checkbox"]:hover {
+        border-color: #0056b3; /* Темно-синий цвет рамки при наведении */
+    }
+
+    input[type="checkbox"]:focus {
+        box-shadow: inset 0px 0px 5px rgba(0,123,255,0.5); /* Тень при фокусе */
     }
 
     @media (max-width: 600px) {
@@ -504,13 +532,12 @@
 	  </ul>
 	</div>
   </div>
-
   <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <img src="ol.png" alt="Обновление" style="width:100%; max-height: 111px;">
+        <img src="ol.png" alt="Обновление" style="width:100%; max-height:111px;">
         <h2>Обновление в Homyk 2!</h2>
-        <p style="color: gray;">Версия: 1.8.23.2 alpha</p>
+        <p style="color:#777;">Версия:<strong>1.8.23.2 alpha</strong></p>
         <p>Обновления:</p>
         <ul>
             <li>Звук при каждом клике: Теперь каждое нажатие в Homyk 2 сопровождается приятным звуком, который делает игровой процесс еще более увлекательным и интерактивным.</li>
@@ -520,10 +547,11 @@
             <li>Исправление ошибок и улучшение стабильности: Мы выслушали отзывы пользователей и работали над улучшением общей стабильности приложения Homyk 2, а также исправлением ошибок для вашего наилучшего опыта игры.</li>
             <li>Многочисленные другие улучшения: Помимо всего вышеперечисленного, мы внесли ряд других улучшений и оптимизаций в Homyk 2, которые сделают ваше погружение в мир Homyk 2 еще более захватывающим и незабываемым.</li>
         </ul>
-        <div style="text-align: center; margin-top: 20px;">
-            <input type="checkbox" id="dismiss-modal"> Больше не оповещать меня о новой информации
-        </div>
-    </div>
+        <div style="text-align:center; margin-top:20px;">
+          <input type="checkbox" id="dismiss-modal"> 
+          <label for="dismiss-modal">Больше не оповещать меня о новой информации</label>
+      </div>
+  </div>
 </div>
 
 
@@ -726,9 +754,9 @@
         // Устанавливаем localStorage при изменении состояния Checkbox
         dismissCheckbox.addEventListener('change', function() {
             if (this.checked) {
-                localStorage.setItem('modalDismissed', 'true');
+                localStorage.setItem('modalDismissed', 'truerhhgirhofghie4he4ohgicehg');
             } else {
-                localStorage.removeItem('modalDismissed');
+                localStorage.removeItem('modalDismisseddddfffff');
             }
         });
     });
@@ -742,7 +770,5 @@
 
 </body>
 </html> 
-
-
 </body>
 </html> 
