@@ -122,8 +122,96 @@
         0%, 100% { transform: translate(0, 0); }
         10%, 30%, 50%, 70%, 90% { transform: translate(-10px, 0); }
         20%, 40%, 60%, 80% { transform: translate(10px, 0); }
+
     }
 </style>
+
+
+<title> Tooltip</title>
+<style>
+  .tooltip {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+  }
+  .clickable-image {
+      position: relative;
+  }
+</style>
+
+<title>lolo</title>
+
+<style>
+  .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+  }
+  .modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fefefe;
+      padding: 20px;
+      border: 2px solid #888;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  .close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+  .close-btn:hover,
+  .close-btn:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+</style>
+
+</style>
+
+<title>prem</title>
+
+<style>
+  .premium-search {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+  }
+  #search-input {
+      padding: 5px;
+      font-size: 16px;
+  }
+  #search-button {
+      padding: 5px 10px;
+      font-size: 16px;
+      margin-left: 5px;
+  }
+</style>
+
+
 
 </style>
 
@@ -188,6 +276,24 @@
     <audio id="sound" src="sound.mp3" preload="auto"> 
       <audio id="click-sound" src="sound33.mp3" preload="auto"></audio>
 <audio id="upgrade-sound" src="sound44.mp3" preload="auto"></audio>
+
+
+<div id="tooltip" class="tooltip">
+  Кликай на хомяка, чтобы богатеть!
+  <div>
+      <input type="checkbox" id="tooltip-checkbox"> Больше не показывать подсказку
+  </div>
+</div>
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Chinesedsaffa.jpg" alt="Кликабельная картинка" class="clickable-image" id="clickable-image" width="200">
+
+
+<div id="premium-search" class="premium-search" style="display: none;">
+  <input type="text" id="search-input" placeholder="Введите код">
+  <button id="search-button">Поиск</button>
+</div>
+
+
+
 
 
 
@@ -301,19 +407,30 @@
 	</div>
   </div>
 
-
+  <div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <img src="ol.png" alt="Обновление" style="width:100%; max-height: 111px;">
+        <h2>Обновление в Homyk 2!</h2>
+        <p style="color: gray;">Версия: 1.8.23.2 alpha</p>
+        <p>Обновления:</p>
+        <ul>
+            <li>...</li>
+            <li>...</li>
+            <li>...</li>
+            <li>...</li>
+        </ul>
+        <div style="text-align: center; margin-top: 20px;">
+            <input type="checkbox" id="dismiss-modal"> Больше не оповещать меня о новой информации
+        </div>
+    </div>
+</div>
 
   
 
 
 
-
-
-
-
-
-
-<script>
+  <script>
     let clickCount = 0;
     let balance = 0;
     let clickValue = 1;
@@ -323,6 +440,34 @@
     let milestones = [100000, 1000000, 10000000, 100000000, 1000000000];
     let lastMilestone = 0;
 
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProgress(); // Загрузка прогресса
+
+        if (localStorage.getItem('tooltipDisabled') !== 'true') {
+            clickableImage.addEventListener('mouseenter', () => {
+                const rect = clickableImage.getBoundingClientRect();
+                tooltip.style.left = `${rect.left}px`;
+                tooltip.style.top = `${rect.bottom + window.scrollY}px`;
+                tooltip.style.display = 'block';
+            });
+
+            clickableImage.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+
+            tooltipCheckbox.addEventListener('change', (event) => {
+                if (event.target.checked) {
+                    localStorage.setItem('tooltipDisabled', 'true');
+                    tooltip.style.display = 'none';
+                }
+            });
+
+            tooltip.addEventListener('mouseleave', () => {
+                tooltip.style.display = 'none';
+            });
+        }
+    });
+
     clickableImage.addEventListener('click', () => {
         clickCount += clickValue;
         balance += clickValue;
@@ -331,6 +476,7 @@
         checkForImageChange();
         checkForShakeEffect();
         playClickSound(); // Воспроизведение звука клика
+        saveProgress(); // Сохранение прогресса
     });
 
     function updateDisplay() {
@@ -351,6 +497,7 @@
             clickValue += increase;
             updateDisplay();
             playUpgradeSound(); // Воспроизведение звука улучшения
+            saveProgress(); // Сохранение прогресса
         } else {
             alert('Недостаточно кликов для покупки!');
         }
@@ -401,10 +548,25 @@
                 setTimeout(() => {
                     clickableImage.classList.remove('shake');
                 }, 800);
-                playSound();  // Воспроизведение звука
+                playSound();
                 lastMilestone = milestone;
             }
         });
+    }
+
+    function saveProgress() {
+        localStorage.setItem('clickCount', clickCount);
+        localStorage.setItem('balance', balance);
+        localStorage.setItem('clickValue', clickValue);
+    }
+
+    function loadProgress() {
+        if (localStorage.getItem('clickCount')) {
+            clickCount = parseInt(localStorage.getItem('clickCount'));
+            balance = parseInt(localStorage.getItem('balance'));
+            clickValue = parseInt(localStorage.getItem('clickValue'));
+            updateDisplay();
+        }
     }
 </script>
 
@@ -436,6 +598,39 @@
 </script>
 
 
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('modal');
+        const closeButton = document.querySelector('.close-btn');
+        const dismissCheckbox = document.getElementById('dismiss-modal');
+
+        // Проверка состояния Checkbox и отображение модального окна
+        if (localStorage.getItem('modalDismissed') !== 'true') {
+            modal.style.display = 'block';
+        }
+
+        // Закрывать модальное окно при клике на кнопку закрытия
+        closeButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Закрывать модальное окно при клике вне его
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Устанавливаем localStorage при изменении состояния Checkbox
+        dismissCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                localStorage.setItem('modalDismissed', 'true');
+            } else {
+                localStorage.removeItem('modalDismissed');
+            }
+        });
+    });
 </script>
 
 
@@ -445,10 +640,4 @@
 
 
 </body>
-</html> 
-
-
-
-</body>
-</html> 
 </html> 
