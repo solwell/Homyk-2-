@@ -321,6 +321,16 @@
             font-size: 24px;
         }
     }
+
+    .confetti {
+        position:absolute;
+        width:.5rem;
+        height:.5rem;
+        background-color:#FFCC00;
+        opacity:.8;
+        animation-duration:.8s;
+        animation-timing-function:ease-in-out;
+    }
 </style>
 
 
@@ -728,47 +738,71 @@
 
 
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('modal');
+      const closeButton = document.querySelector('.close-btn');
+      const dismissCheckbox = document.getElementById('dismiss-modal');
+      const versionText = document.getElementById('version');
+  
+      // Проверка состояния Checkbox и отображение модального окна
+      if (localStorage.getItem('modalDismissed') !== 'true') {
+          modal.style.display = 'block';
+      }
+  
+      // Закрывать модальное окно при клике на кнопку закрытия
+      closeButton.addEventListener('click', function() {
+          modal.style.display = 'none';
+      });
+  
+      // Закрывать модальное окно при клике вне его
+      window.addEventListener('click', function(event) {
+          if (event.target === modal) {
+              modal.style.display = 'none';
+          }
+      });
+  
+      // Устанавливаем localStorage при изменении состояния Checkbox
+      dismissCheckbox.addEventListener('change', function() {
+          if (this.checked) {
+              localStorage.setItem('modalDismissed', 'true');
+          } else {
+              localStorage.removeItem('modalDismissed');
+          }
+      });
+  
+      // Эффект хлопушки при нажатии на версию
+      versionText.addEventListener('click', function() {
+          for (let i = 0; i < 30; i++) { // Количество хлопушек
+              createConfetti();
+          }
+      });
+  
+      function createConfetti() {
+          const confetti = document.createElement("div");
+          
+          confetti.classList.add("confetti");
+          
+          // Позиционирование хлопушки в случайной точке
+          confetti.style.left = Math.random() * window.innerWidth + "px";
+          
+          // Анимация хлопушки
+          confetti.style.animationName = "fall";
+          
+           // Установка случайной высоты падения
+           confetti.style.top = Math.random() * -100 + "px";
+          
+           // Добавление хлопушки в документ
+           document.body.appendChild(confetti);
+           
+           // Удаление хлопушки после анимации
+           setTimeout(() => confetti.remove(),1000);
+       }
+  });
+  </script> 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('modal');
-        const closeButton = document.querySelector('.close-btn');
-        const dismissCheckbox = document.getElementById('dismiss-modal');
-
-        // Проверка состояния Checkbox и отображение модального окна
-        if (localStorage.getItem('modalDismissed') !== 'true') {
-            modal.style.display = 'block';
-        }
-
-        // Закрывать модальное окно при клике на кнопку закрытия
-        closeButton.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-
-        // Закрывать модальное окно при клике вне его
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Устанавливаем localStorage при изменении состояния Checkbox
-        dismissCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                localStorage.setItem('modalDismissed', 'true');
-            } else {
-                localStorage.removeItem('modalDismissed');
-            }
-        });
-    });
-</script>
 
 
 
 
-
-
-
-</body>
-</html> 
 </body>
 </html> 
