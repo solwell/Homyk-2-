@@ -331,6 +331,15 @@
         animation-duration:.8s;
         animation-timing-function:ease-in-out;
     }
+
+    @keyframes fall {
+    to {
+        transform: translateY(100vh); /* Падение до низа экрана */
+    }
+}
+
+
+
 </style>
 
 
@@ -738,69 +747,74 @@
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      const modal = document.getElementById('modal');
-      const closeButton = document.querySelector('.close-btn');
-      const dismissCheckbox = document.getElementById('dismiss-modal');
-      const versionText = document.getElementById('version');
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('modal');
+        const closeButton = document.querySelector('.close-btn');
+        const dismissCheckbox = document.getElementById('dismiss-modal');
+        const versionText = document.getElementById('version');
   
-      // Проверка состояния Checkbox и отображение модального окна
-      if (localStorage.getItem('modalDismissed') !== 'true') {
-          modal.style.display = 'block';
-      }
+        // Проверка состояния Checkbox и отображение модального окна
+        if (localStorage.getItem('modalDismissed') !== 'true') {
+            modal.style.display = 'block';
+        }
   
-      // Закрывать модальное окно при клике на кнопку закрытия
-      closeButton.addEventListener('click', function() {
-          modal.style.display = 'none';
-      });
+        // Закрывать модальное окно при клике на кнопку закрытия
+        closeButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
   
-      // Закрывать модальное окно при клике вне его
-      window.addEventListener('click', function(event) {
-          if (event.target === modal) {
-              modal.style.display = 'none';
-          }
-      });
+        // Закрывать модальное окно при клике вне его
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
   
-      // Устанавливаем localStorage при изменении состояния Checkbox
-      dismissCheckbox.addEventListener('change', function() {
-          if (this.checked) {
-              localStorage.setItem('modalDismissed', 'true');
-          } else {
-              localStorage.removeItem('modalDismissed');
-          }
-      });
+        // Устанавливаем localStorage при изменении состояния Checkbox
+        dismissCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                localStorage.setItem('modalDismissed', 'true');
+            } else {
+                localStorage.removeItem('modalDismissed');
+            }
+        });
   
-      // Эффект хлопушки при нажатии на версию
-      versionText.addEventListener('click', function() {
-          for (let i = 0; i < 30; i++) { // Количество хлопушек
-              createConfetti();
-          }
-      });
+        // Эффект хлопушки при нажатии на версию
+        versionText.addEventListener('click', function(event) {
+            createConfetti(event);
+        });
   
-      function createConfetti() {
-          const confetti = document.createElement("div");
-          
-          confetti.classList.add("confetti");
-          
-          // Позиционирование хлопушки в случайной точке
-          confetti.style.left = Math.random() * window.innerWidth + "px";
-          
-          // Анимация хлопушки
-          confetti.style.animationName = "fall";
-          
-           // Установка случайной высоты падения
-           confetti.style.top = Math.random() * -100 + "px";
-          
-           // Добавление хлопушки в документ
-           document.body.appendChild(confetti);
-           
-           // Удаление хлопушки после анимации
-           setTimeout(() => confetti.remove(),1000);
-       }
-  });
-  </script> 
+        function createConfetti(event) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+  
+            // Позиционирование хлопушки рядом с текстом версии
+            const rect = event.target.getBoundingClientRect();
+            confetti.style.left = rect.left + window.scrollX + "px";
+            confetti.style.top = rect.top + window.scrollY + "px";
+  
+            // Анимация хлопушки
+            confetti.style.animationName = "fall";
+            
+            // Установка случайной высоты падения
+            confetti.style.top = Math.random() * -100 + "px";
+  
+            // Добавление хлопушки в документ
+            document.body.appendChild(confetti);
+            
+            // Удаление хлопушки после анимации
+            setTimeout(() => confetti.remove(), 1000);
+         }
+    });
+  </script>
+  
 
 
+
+
+
+</body>
+</html> 
 
 
 
