@@ -364,100 +364,7 @@
 
  </style>
  <title>Ases</title>
- <style>
-    .achievement-container {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        pointer-events: none; /* Достижения не будут мешать взаимодействию с сайтом */
-    }
-
-    .achievement {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 2px solid #888;
-        border-radius: 10px;
-        padding: 10px;
-        margin-top: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        width: 90%;
-        max-width: 600px;
-        transform: translateY(-100%);
-        transition: transform 0.5s, opacity 0.5s;
-        opacity: 0;
-    }
-
-    .achievement img {
-        width: 72px; /* Новый размер картинки */
-        height: 72px; /* Новый размер картинки */
-        margin-right: 10px;
-    }
-
-    .achievement h3 {
-        margin: 0;
-        color: #000; /* Черный цвет заголовка */
-    }
-
-    .achievement p {
-        margin: 0;
-        color: #555; /* Серый цвет текста */
-    }
-
-    .achievement:hover {
-        background-color: #007BFF; /* Голубой фон при наведении */
-    }
-
-    .achievement:hover h3,
-    .achievement:hover p {
-        color: #fff; /* Белый цвет текста при наведении */
-    }
-</style>
-<title>poisc</title>
-
-<style>
-    .search-container {
-        position: absolute; /* Изменим на абсолютное позиционирование */
-        top: 10px;
-        left: 70%; /* Смещение на 70% влево */
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background-color: white;
-        padding: 10px 20px;
-        border-radius: 25px; /* Сделаем контейнер более округлым */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 1px solid #ccc;
-        transition: box-shadow 0.3s ease;
-        z-index: 9999; /* Добавим z-index, чтобы контейнер поиска оставался на месте */
-    }
-
-    .search-container:hover {
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    #search-input {
-        flex: 1;
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 20px; /* Сделаем поле ввода более округлым */
-        outline: none;
-        transition: border-color 0.3s ease;
-    }
-
-    #search-input:focus {
-        border-color: #007BFF;
-    }
-
-    .no-results::placeholder {
-        color: red; /* Красный цвет текста для "Ничего не найдено" */
-    }
-</style>
-
+ 
 
 
 
@@ -526,10 +433,7 @@
 
 </head>
 <body>
-    <div id="search-container" class="search-container">
-        <input type="text" id="search-input" placeholder="Введите текст для поиска">
-    </div>
-    <div id="search-results" class="search-results"></div>
+ 
     
     
 
@@ -703,7 +607,7 @@
         <span class="close-btn">&times;</span>
         <img src="ol.png" alt="Обновление" style="width:100%; max-height:111px;">
         <h2>Обновление в Homyk 2!</h2>
-        <p style="color:#777;">Версия:<strong>1.9.27.7 alpha</strong></p>
+        <p style="color:#777;">Версия:<strong>1.8.23.2 alpha</strong></p>
         <p>Обновления:</p>
         <ul>
             <li>Достижение.Одной из главных нововведений стало добавление системы достижений – теперь игроки Homyk 2 могут получать достижения и отслеживать свой прогресс в Homyk 2. Это позволит им чувствовать себя более мотивированными и заинтересованными в достижении новых целей в Homyk 2.  </li>
