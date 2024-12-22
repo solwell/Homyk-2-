@@ -416,6 +416,11 @@
     .achievement:hover p {
         color: #fff; /* Белый цвет текста при наведении */
     }
+
+
+
+
+
 </style>
 
 
@@ -490,10 +495,8 @@
     
 
 
+    <div id="achievement-container"></div>
 
-    <div id="achievement-container" class="achievement-container">
-        <!-- Сюда будут добавляться достижения -->
-    </div>
     
 
 
@@ -962,14 +965,14 @@
                 backgroundClickCount++;
                 if (backgroundClickCount >= 20 && !localStorage.getItem('backgroundClicks20')) {
                     localStorage.setItem('backgroundClicks20', 'true');
-                    showAchievement('Большой брат следит за тобой', 'Покликать на фон 20 раз', 'https://media.istockphoto.com/id/981630990/ru/%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F/%D0%B2%D0%B8%D0%BD%D1%82%D0%B0%D0%B6-%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B8%D0%B9-%D0%B1%D1%80%D0%B0%D1%82-%D0%BD%D0%B0%D0%B1%D0%BB%D1%8E%D0%B4%D0%B0%D1%8F-%D0%B7%D0%B0-%D0%B2%D0%B0%D0%BC%D0%B8-%D1%88%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D0%B6%D0%B5-%D0%B3%D0%BB%D0%B0%D0%B7%D0%B0-%D0%BD%D0%B0%D0%B1%D0%BB%D1%8E%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8.jpg?s=612x612&w=0&k=20&c=vwISQkcVGGpOBRGc3O6Z345otD53PLbhgctBfLbJPZk=');
+                    showAchievement('Большой брат следит за тобой', 'Покликать на фон 20 раз', 'https://media.istockphoto.com/id/981630990/ru/%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%B2%D0%B8%D0%BD%D1%82%D0%B0%D0%B6-%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B8%D0%B9-%D0%B1%D1%80%D0%B0%D1%82-%D0%BD%D0%B0%D0%B1%D0%BB%D1%8E%D0%B4%D0%B0%D1%8F-%D0%B7%D0%B0-%D0%B2%D0%B0%D0%BC%D0%B8-%D1%88%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D0%B6%D0%B5-%D0%B3%D0%BB%D0%B0%D0%B7%D0%B0-%D0%BD%D0%B0%D0%B1%D0%BB%D1%8E%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8.jpg?s=612x612&w=0&k=20&c=vwISQkcVGGpOBRGc3O6Z345otD53PLbhgctBfLbJPZk=');
                 }
             }
         });
 
         function checkBalanceAchievements() {
             const balance = parseInt(document.getElementById('balance').textContent);
-            
+
             if (balance >= 100 && !localStorage.getItem('achieved100')) {
                 localStorage.setItem('achieved100', 'true');
                 showAchievement('Слабак', 'Кликнуть по хомяку 100 раз', 'https://masterpiecer-images.s3.yandex.net/0255e3434e8311ee96dd222e7fa838a6:upscaled');
@@ -984,7 +987,22 @@
                 localStorage.setItem('achieved100000', 'true');
                 showAchievement('Начало крупного бизнеса', 'Кликнуть по хомяку 100000 раз', 'https://masterpiecer-images.s3.yandex.net/0aadd87c92a211ee86f97a2f0d1382ba:upscaled');
             }
-        }
+
+            if (balance >= 1000000 && !localStorage.getItem('achieved1000000')) {
+                localStorage.setItem('achieved1000000', 'true');
+                showAchievement('Бизнес...', 'По кликать по хомяку 1000000 раз', 'https://masterpiecer-images.s3.yandex.net/bfe8e9cfaa2611eeb730720ccb3e265f:upscaled');
+            }
+
+            if (balance >= 10000000 && !localStorage.getItem('achieved10000000')) {
+                localStorage.setItem('achieved10000000', 'true');
+                showAchievement('Бизнес....Мен?', 'По кликать по хомяку 10000000 раз', 'https://masterpiecer-images.s3.yandex.net/9cc603c0952c11eebe73429f31467427:upscaled');
+            }
+
+            if (balance >= 100000000 && !localStorage.getItem('achieved100000000')) { localStorage.setItem('achieved100000000', 'true'); showAchievement('Бизнесмен', 'Кликнуть по хомяку 100000000 раз', 'https://masterpiecer-images.s3.yandex.net/4a9556bf988011ee90f5eae6ee97829d:upscaled'); } }
+
+
+
+
 
         function checkUpgradeAchievements() {
             const upgrades = parseInt(localStorage.getItem('upgradeCount')) || 0;
@@ -1010,11 +1028,27 @@
             }
         }
 
+      
         function updateUpgradeCount() {
-            let upgrades = parseInt(localStorage.getItem('upgradeCount')) || 0;
-            upgrades += 1;
-            localStorage.setItem('upgradeCount', upgrades.toString());
-        }
+    let upgrades = parseInt(localStorage.getItem('upgradeCount')) || 0;
+    upgrades += 1;
+    localStorage.setItem('upgradeCount', upgrades.toString());
+
+    // Проверка достижения для покупки +20000 кликов за 5000000 кликов (9-е улучшение)
+    const upgradeList = document.querySelectorAll('.button'); // Получаем список всех улучшений
+    const specificUpgradeIndex = 8; // Порядковый номер улучшения в списке (индексы начинаются с 0)
+
+    if (upgradeList[specificUpgradeIndex] && upgrades >= 1 && !localStorage.getItem('achievedSpecialUpgrade')) {
+        localStorage.setItem('achievedSpecialUpgrade', 'true');
+        showAchievement('Ты точно смыслишь в бизнесе?', 'Купить самое невыгодное предложение', 'https://avatars.mds.yandex.net/get-shedevrum/9283310/8a7cb385b92611ee93230272250bcc9d/orig');
+    }
+}
+
+
+
+
+
+ 
 
 
     document.addEventListener('keyup', function(event) {
@@ -1027,49 +1061,52 @@
         }
     });
 
-  
    
+  
+      
 
-        function showAchievement(title, text, imgSrc) {
-            const container = document.getElementById('achievement-container');
-            const achievement = document.createElement('div');
-            achievement.className = 'achievement';
+       
 
-            const img = document.createElement('img');
-            img.src = imgSrc;
-            achievement.appendChild(img);
+    
+    function showAchievement(title, text, imgSrc) {
+        const container = document.getElementById('achievement-container');
+        const achievement = document.createElement('div');
+        achievement.className = 'achievement';
 
-            const content = document.createElement('div');
-            const heading = document.createElement('h3');
-            heading.textContent = title;
-            const paragraph = document.createElement('p');
-            paragraph.textContent = text;
-            content.appendChild(heading);
-            content.appendChild(paragraph);
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        achievement.appendChild(img);
 
-            achievement.appendChild(content);
-            container.appendChild(achievement);
+        const content = document.createElement('div');
+        const heading = document.createElement('h3');
+        heading.textContent = title;
+        const paragraph = document.createElement('p');
+        paragraph.textContent = text;
+        content.appendChild(heading);
+        content.appendChild(paragraph);
 
-            // Проигрывание звука
-            const audio = new Audio('sound111.mp3');
-            audio.play();
+        achievement.appendChild(content);
+        container.appendChild(achievement);
 
-            // Появление достижения
+        // Проигрывание звука
+        const audio = new Audio('sound111.mp3');
+        audio.play();
+
+        // Появление достижения
+        setTimeout(() => {
+            achievement.style.transform = 'translateY(0)';
+            achievement.style.opacity = '1';
+        }, 100);
+
+        // Скрытие достижения через 5 секунд
+        setTimeout(() => {
+            achievement.style.transform = 'translateY(-100%)';
+            achievement.style.opacity = '0';
             setTimeout(() => {
-                achievement.style.transform = 'translateY(0)';
-                achievement.style.opacity = '1';
-            }, 100);
-
-            // Скрытие достижения через 5 секунд
-            setTimeout(() => {
-                achievement.style.transform = 'translateY(-100%)';
-                achievement.style.opacity = '0';
-                setTimeout(() => {
-                    container.removeChild(achievement);
-                }, 500);
-            }, 5000);
-        }
-    });
+                container.removeChild(achievement);
+            }, 500);
+        }, 5000);
+    }
 </script>
 
 
