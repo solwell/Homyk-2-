@@ -496,6 +496,7 @@
 
 
     <div id="achievement-container"></div>
+	
 
     
 
@@ -1051,15 +1052,7 @@
  
 
 
-    document.addEventListener('keyup', function(event) {
-        if ((event.ctrlKey && event.key === 'u') || event.key === 'U') {
-            // Проверка на нажатие Ctrl+U или на другие комбинации
-            if (!localStorage.getItem('viewedSourceCode')) {
-                localStorage.setItem('viewedSourceCode', 'true');
-                showAchievement('Ты что делаешь, братец!', 'Быть слишком любопытным', 'https://mishka-knizhka.ru/wp-content/uploads/2020/10/ljubopytnaya-varvara.jpg');
-            }
-        }
-    });
+ 
 
    
   
@@ -1111,24 +1104,7 @@
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search-input');
 
-        searchInput.addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                displayNoResults();
-            }
-        });
-
-        function displayNoResults() {
-            searchInput.value = '';  // Очистка поля ввода
-            searchInput.placeholder = 'Ничего не найдено';
-            searchInput.classList.add('no-results');
-        }
-    });
-
-</script>
 
 
 
